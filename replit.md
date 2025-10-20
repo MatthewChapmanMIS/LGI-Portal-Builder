@@ -4,7 +4,7 @@
 A futuristic, professional web portal builder with theme customization, logo/icon management, and hierarchical subsite organization. Inspired by the Lauridsen Group website's professional aesthetic with a modern, glassmorphic design system.
 
 ## Recent Changes
-- **October 20, 2025**: Complete MVP implementation + Image Upload Backend
+- **October 20, 2025**: Complete MVP implementation with advanced features
   - **Database**: Migrated from in-memory to PostgreSQL with Drizzle ORM and Neon serverless driver
   - **Drag-and-Drop**: Implemented @dnd-kit ordering for subsites and links with optimistic updates
   - **Theme Templates**: Added 6 curated theme templates (Corporate Blue, Tech Purple, Creative Orange, Minimal Gray, Forest Green, Sunset Red) with auto-fill functionality
@@ -13,6 +13,11 @@ A futuristic, professional web portal builder with theme customization, logo/ico
     - ACL policy enforcement (public visibility for portal assets)
     - ObjectUploader component with Uppy integration
     - Three-step flow: presigned upload → direct storage → validation/ACL finalization
+  - **Custom Domain Mapping**: Domain configuration for subsites with regex validation and UI integration
+  - **Advanced Icon Library**: Categorized icon library with 60+ lucide-react icons across 11 categories
+    - IconPicker component with search functionality and category tabs
+    - Dual-mode selection: choose from library OR upload custom images
+    - Smart rendering in cards: detects library icons vs. uploaded images
   - **Data Persistence**: All CRUD operations working with proper database persistence
   - **UI/UX**: Glassmorphic design, dark mode, professional color palette (navy, charcoal, white, blue accents)
   - **Pages**: Dashboard (real-time stats), Themes (with templates), Subsites, Links, Settings

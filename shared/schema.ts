@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, jsonb, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -29,6 +29,14 @@ export const links = pgTable("links", {
   description: text("description"),
   iconUrl: text("icon_url"),
   order: integer("order").notNull().default(0),
+});
+
+export const analytics = pgTable("analytics", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  eventType: varchar("event_type", { length: 50 }).notNull(),
+  resourceType: varchar("resource_type", { length: 50 }).notNull(),
+  resourceId: varchar("resource_id").notNull(),
+  timestamp: timestamp("timestamp").notNull().default(sql`now()`),
 });
 
 export const insertThemeSchema = createInsertSchema(themes).omit({ id: true }).extend({
@@ -61,12 +69,20 @@ export const insertLinkSchema = createInsertSchema(links).omit({ id: true }).ext
   order: z.coerce.number().default(0),
 });
 
+export const insertAnalyticsSchema = createInsertSchema(analytics).omit({ id: true, timestamp: true }).extend({
+  eventType: z.enum(["view", "click"]),
+  resourceType: z.enum(["subsite", "link"]),
+  resourceId: z.string().min(1, "Resource ID is required"),
+});
+
 export type InsertTheme = z.infer<typeof insertThemeSchema>;
 export type Theme = typeof themes.$inferSelect;
 export type InsertSubsite = z.infer<typeof insertSubsiteSchema>;
 export type Subsite = typeof subsites.$inferSelect;
 export type InsertLink = z.infer<typeof insertLinkSchema>;
 export type Link = typeof links.$inferSelect;
+export type InsertAnalytics = z.infer<typeof insertAnalyticsSchema>;
+export type Analytics = typeof analytics.$inferSelect;
 
 export interface ThemeColors {
   primary: string;

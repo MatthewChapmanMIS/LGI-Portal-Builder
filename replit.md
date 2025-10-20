@@ -18,9 +18,16 @@ A futuristic, professional web portal builder with theme customization, logo/ico
     - IconPicker component with search functionality and category tabs
     - Dual-mode selection: choose from library OR upload custom images
     - Smart rendering in cards: detects library icons vs. uploaded images
+  - **Analytics Dashboard**: Full engagement tracking and reporting system
+    - Analytics table in database schema for tracking view/click events
+    - Both MemStorage and DatabaseStorage implementations with in-memory/SQL aggregation
+    - 5 API routes for tracking, summary, top subsites, top links, recent activity
+    - Analytics page with recharts visualizations (metrics cards, bar charts, recent activity)
+    - Click/view tracking integrated into SubsiteCard and LinkCard components
+    - Real-time analytics with TanStack Query data fetching
   - **Data Persistence**: All CRUD operations working with proper database persistence
   - **UI/UX**: Glassmorphic design, dark mode, professional color palette (navy, charcoal, white, blue accents)
-  - **Pages**: Dashboard (real-time stats), Themes (with templates), Subsites, Links, Settings
+  - **Pages**: Dashboard (real-time stats), Themes (with templates), Subsites, Links, Analytics (engagement tracking), Settings
   - **Navigation**: Shadcn UI sidebar with smooth navigation
 
 ## Tech Stack
@@ -39,25 +46,36 @@ A futuristic, professional web portal builder with theme customization, logo/ico
    - Logo upload support
    
 2. **Subsites**: Hierarchical organization of portal sections
-   - Name, description, URL, icon/logo
+   - Name, description, URL, icon/logo, custom domain
    - Parent-child relationships
-   - Custom ordering
+   - Custom ordering via drag-and-drop
    
 3. **Links**: External application connections within subsites
    - Name, URL, description, icon
    - Associated with parent subsite
-   - Custom ordering
+   - Custom ordering via drag-and-drop
+   
+4. **Analytics**: Engagement tracking for subsites and links
+   - Event type (view, click), resource type (subsite, link), resource ID
+   - Timestamp for trend analysis
+   - Aggregation queries for dashboards and reports
 
 ### Key Features
 - **Dashboard**: Real-time counts for themes, subsites, and links from database queries
 - **Theme Builder**: Visual color picker with live preview and 6 pre-built templates
-- **Subsite Manager**: Hierarchical organization with drag-and-drop ordering
+- **Subsite Manager**: Hierarchical organization with drag-and-drop ordering, custom domains
 - **Link Manager**: External app connections with drag-and-drop ordering
+- **Analytics Dashboard**: Engagement tracking with metrics, charts, and leaderboards
+  - View tracking for subsites, click tracking for links
+  - Summary metrics (total events, subsite views, link clicks)
+  - Top performers visualization with recharts bar charts
+  - Recent activity feed with timestamps
 - **Settings**: Portal configuration and preferences
 - **Dark Mode**: Professional dark theme with light mode support
 - **Drag-and-Drop**: Optimistic updates with batched backend persistence
 - **Theme Templates**: Curated color palettes for different brand personalities
 - **Image Upload**: Complete backend with object storage, validation, and ACL enforcement
+- **Icon System**: Dual-mode icon selection (60+ library icons OR custom uploads)
 
 ### Design Guidelines
 The application follows a futuristic, professional design approach:
@@ -78,12 +96,17 @@ client/src/
 │   ├── subsite-card.tsx
 │   ├── link-card.tsx
 │   ├── theme-card.tsx
-│   └── image-upload.tsx
+│   ├── image-upload.tsx
+│   └── icon-picker.tsx
+├── lib/
+│   ├── analytics.ts (Event tracking helper)
+│   └── iconLibrary.ts (60+ categorized lucide icons)
 ├── pages/
 │   ├── dashboard.tsx
 │   ├── themes.tsx
 │   ├── subsites.tsx
 │   ├── links.tsx
+│   ├── analytics.tsx
 │   └── settings.tsx
 └── App.tsx
 
@@ -123,6 +146,13 @@ All routes implemented with PostgreSQL persistence:
 - `POST /api/objects/upload` - Get presigned URL for direct upload to object storage
 - `GET /objects/:objectPath` - Serve uploaded objects with ACL enforcement
 - `PUT /api/images` - Finalize image upload with validation and ACL policy
+
+### Analytics Routes
+- `POST /api/analytics/track` - Track view/click events for subsites and links
+- `GET /api/analytics/summary` - Get summary metrics (total events, subsite views, link clicks)
+- `GET /api/analytics/top-subsites` - Get top subsites by view count
+- `GET /api/analytics/top-links` - Get top links by click count
+- `GET /api/analytics/recent` - Get recent activity feed
 
 ## Running the Project
 The workflow "Start application" runs `npm run dev` which starts:

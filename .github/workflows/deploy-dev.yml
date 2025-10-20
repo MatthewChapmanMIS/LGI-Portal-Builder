@@ -1,0 +1,46 @@
+# Deploy DEV to Azure Web App (Next.js + Prisma)
+# Requires repo secrets:
+#  - AZURE_WEBAPP_PUBLISH_PROFILE  (from Azure -> Get publish profile)
+#  - DATABASE_URL_DEV              (your full Postgres URL for DEV)
+
+name: Deploy DEV to Azure Web App - mis-cus-portal-dev-app
+
+on:
+  push:
+    branches: [ "main" ]   # or change if you use a different branch
+  workflow_dispatch:        # allows manual run in GitHub
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # Make DATABASE_URL available to Prisma during the workflow
+      DATABASE_URL: ${{ secrets.DATABASE_URL_DEV }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Build app
+        run: npm run build
+
+      - name: Apply DB migrations (Prisma migrate deploy)
+        run: npm run migrate:deploy
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: mis-cus-portal-dev-app
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .

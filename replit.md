@@ -4,18 +4,18 @@
 A futuristic, professional web portal builder with theme customization, logo/icon management, and hierarchical subsite organization. Inspired by the Lauridsen Group website's professional aesthetic with a modern, glassmorphic design system.
 
 ## Recent Changes
-- **October 20, 2025**: Initial implementation
-  - Created complete data schema for themes, subsites, and links
-  - Built all frontend components with glassmorphic design
-  - Implemented dark mode with professional color palette (navy, charcoal, white, blue accents)
-  - Created Dashboard, Themes, Subsites, Links, and Settings pages
-  - Integrated image upload functionality for logos and icons
-  - Added Shadcn UI sidebar with smooth navigation
+- **October 20, 2025**: Complete MVP implementation
+  - **Database**: Migrated from in-memory to PostgreSQL with Drizzle ORM and Neon serverless driver
+  - **Drag-and-Drop**: Implemented @dnd-kit ordering for subsites and links with optimistic updates
+  - **Data Persistence**: All CRUD operations working with proper database persistence
+  - **UI/UX**: Glassmorphic design, dark mode, professional color palette (navy, charcoal, white, blue accents)
+  - **Pages**: Dashboard (real-time stats), Themes, Subsites, Links, Settings
+  - **Navigation**: Shadcn UI sidebar with smooth navigation
 
 ## Tech Stack
 - **Frontend**: React, TypeScript, Tailwind CSS, Shadcn UI
 - **Backend**: Express.js, Node.js
-- **Storage**: In-memory storage (MemStorage)
+- **Database**: PostgreSQL with Neon serverless, Drizzle ORM
 - **Routing**: Wouter
 - **State Management**: TanStack Query
 - **Design System**: Custom theme based on Lauridsen Group colors
@@ -38,13 +38,14 @@ A futuristic, professional web portal builder with theme customization, logo/ico
    - Custom ordering
 
 ### Key Features
-- **Dashboard**: Overview with stats and recent subsites
+- **Dashboard**: Real-time counts for themes, subsites, and links from database queries
 - **Theme Builder**: Visual color picker with live preview
-- **Subsite Manager**: Create and organize portal sections with icons
-- **Link Manager**: Connect external applications
+- **Subsite Manager**: Hierarchical organization with drag-and-drop ordering
+- **Link Manager**: External app connections with drag-and-drop ordering
 - **Settings**: Portal configuration and preferences
 - **Dark Mode**: Professional dark theme with light mode support
-- **Image Upload**: Drag-and-drop for logos and icons
+- **Drag-and-Drop**: Optimistic updates with batched backend persistence
+- **Image Upload**: URL-based logos and icons (file upload backend pending)
 
 ### Design Guidelines
 The application follows a futuristic, professional design approach:
@@ -76,24 +77,26 @@ client/src/
 
 server/
 ├── routes.ts (API endpoints)
-└── storage.ts (In-memory data store)
+├── storage.ts (Database interface)
+└── db.ts (Drizzle database connection)
 
 shared/
 └── schema.ts (TypeScript types and Zod schemas)
 ```
 
-## API Routes (To Be Implemented)
+## API Routes
+All routes implemented with PostgreSQL persistence:
 - `GET /api/themes` - List all themes
 - `POST /api/themes` - Create new theme
 - `PATCH /api/themes/:id` - Update theme
 - `DELETE /api/themes/:id` - Delete theme
-- `GET /api/subsites` - List all subsites
+- `GET /api/subsites` - List all subsites (ordered by `order` field)
 - `POST /api/subsites` - Create new subsite
-- `PATCH /api/subsites/:id` - Update subsite
+- `PATCH /api/subsites/:id` - Update subsite (includes reordering)
 - `DELETE /api/subsites/:id` - Delete subsite
-- `GET /api/links` - List all links
+- `GET /api/links` - List all links (ordered by `order` field)
 - `POST /api/links` - Create new link
-- `PATCH /api/links/:id` - Update link
+- `PATCH /api/links/:id` - Update link (includes reordering)
 - `DELETE /api/links/:id` - Delete link
 
 ## Running the Project

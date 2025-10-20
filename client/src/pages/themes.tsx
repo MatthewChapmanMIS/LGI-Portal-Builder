@@ -49,9 +49,91 @@ const defaultColors = {
   border: "#334155",
 };
 
+const themeTemplates = [
+  {
+    name: "Corporate Blue",
+    description: "Professional and trustworthy",
+    colors: {
+      primary: "#1e40af",
+      background: "#0f172a",
+      surface: "#1e293b",
+      accent: "#3b82f6",
+      text: "#f8fafc",
+      textSecondary: "#cbd5e1",
+      border: "#334155",
+    },
+  },
+  {
+    name: "Tech Purple",
+    description: "Modern and innovative",
+    colors: {
+      primary: "#7c3aed",
+      background: "#18181b",
+      surface: "#27272a",
+      accent: "#a78bfa",
+      text: "#fafafa",
+      textSecondary: "#d4d4d8",
+      border: "#3f3f46",
+    },
+  },
+  {
+    name: "Creative Orange",
+    description: "Bold and energetic",
+    colors: {
+      primary: "#ea580c",
+      background: "#1c1917",
+      surface: "#292524",
+      accent: "#fb923c",
+      text: "#fafaf9",
+      textSecondary: "#d6d3d1",
+      border: "#44403c",
+    },
+  },
+  {
+    name: "Minimal Gray",
+    description: "Clean and sophisticated",
+    colors: {
+      primary: "#0f172a",
+      background: "#ffffff",
+      surface: "#f8fafc",
+      accent: "#475569",
+      text: "#0f172a",
+      textSecondary: "#64748b",
+      border: "#e2e8f0",
+    },
+  },
+  {
+    name: "Forest Green",
+    description: "Natural and calming",
+    colors: {
+      primary: "#059669",
+      background: "#0c1713",
+      surface: "#1a2e25",
+      accent: "#10b981",
+      text: "#f0fdf4",
+      textSecondary: "#d1fae5",
+      border: "#2d4a3e",
+    },
+  },
+  {
+    name: "Sunset Red",
+    description: "Passionate and dynamic",
+    colors: {
+      primary: "#dc2626",
+      background: "#1f0c0c",
+      surface: "#2d1414",
+      accent: "#ef4444",
+      text: "#fef2f2",
+      textSecondary: "#fecaca",
+      border: "#451a1a",
+    },
+  },
+];
+
 export default function Themes() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingTheme, setEditingTheme] = useState<Theme | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<number | null>(null);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof themeFormSchema>>({
@@ -125,12 +207,30 @@ export default function Themes() {
     setIsDialogOpen(open);
     if (!open) {
       setEditingTheme(null);
+      setSelectedTemplate(null);
       form.reset({
         name: "",
         colors: defaultColors,
         logoUrl: "",
       });
     }
+  };
+
+  const handleTemplateSelect = (index: number) => {
+    setSelectedTemplate(index);
+    const template = themeTemplates[index];
+    form.setValue("name", template.name);
+    Object.entries(template.colors).forEach(([key, value]) => {
+      form.setValue(`colors.${key as keyof typeof defaultColors}`, value);
+    });
+  };
+
+  const handleClearTemplate = () => {
+    setSelectedTemplate(null);
+    form.setValue("name", "");
+    Object.entries(defaultColors).forEach(([key, value]) => {
+      form.setValue(`colors.${key as keyof typeof defaultColors}`, value);
+    });
   };
 
   return (
@@ -199,6 +299,54 @@ export default function Themes() {
               Customize your portal's color scheme and branding
             </DialogDescription>
           </DialogHeader>
+
+          {!editingTheme && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <FormLabel>Start from Template</FormLabel>
+                {selectedTemplate !== null && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearTemplate}
+                    data-testid="button-clear-template"
+                  >
+                    Clear Selection
+                  </Button>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {themeTemplates.map((template, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => handleTemplateSelect(index)}
+                    data-testid={`button-template-${index}`}
+                    className={`p-3 rounded-md border-2 text-left transition-all hover-elevate ${
+                      selectedTemplate === index
+                        ? "border-primary bg-primary/10"
+                        : "border-border"
+                    }`}
+                  >
+                    <div className="font-medium text-sm mb-1">{template.name}</div>
+                    <div className="text-xs text-muted-foreground mb-2">
+                      {template.description}
+                    </div>
+                    <div className="flex gap-1">
+                      {Object.values(template.colors).slice(0, 5).map((color, i) => (
+                        <div
+                          key={i}
+                          className="w-4 h-4 rounded-sm border border-border"
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">

@@ -16,6 +16,7 @@ export const subsites = pgTable("subsites", {
   description: text("description"),
   iconUrl: text("icon_url"),
   url: text("url"),
+  customDomain: text("custom_domain"),
   parentId: varchar("parent_id"),
   order: integer("order").notNull().default(0),
 });
@@ -40,6 +41,13 @@ export const insertSubsiteSchema = createInsertSchema(subsites).omit({ id: true 
   url: z.string().url("Invalid URL").optional().or(z.literal("")).nullable(),
   description: z.string().optional().nullable(),
   iconUrl: z.string().optional().nullable(),
+  customDomain: z.string()
+    .optional()
+    .nullable()
+    .refine(
+      (val) => !val || /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(val),
+      "Invalid domain format (e.g., example.com or subdomain.example.com)"
+    ),
   parentId: z.string().optional().nullable(),
   order: z.coerce.number().default(0),
 });

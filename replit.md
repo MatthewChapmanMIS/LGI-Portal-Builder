@@ -4,10 +4,15 @@
 A futuristic, professional web portal builder with theme customization, logo/icon management, and hierarchical subsite organization. Inspired by the Lauridsen Group website's professional aesthetic with a modern, glassmorphic design system.
 
 ## Recent Changes
-- **October 20, 2025**: Complete MVP implementation
+- **October 20, 2025**: Complete MVP implementation + Image Upload Backend
   - **Database**: Migrated from in-memory to PostgreSQL with Drizzle ORM and Neon serverless driver
   - **Drag-and-Drop**: Implemented @dnd-kit ordering for subsites and links with optimistic updates
   - **Theme Templates**: Added 6 curated theme templates (Corporate Blue, Tech Purple, Creative Orange, Minimal Gray, Forest Green, Sunset Red) with auto-fill functionality
+  - **Image Upload**: Complete backend with Replit Object Storage integration
+    - Backend validation for image type (image/*) and size (10MB max)
+    - ACL policy enforcement (public visibility for portal assets)
+    - ObjectUploader component with Uppy integration
+    - Three-step flow: presigned upload → direct storage → validation/ACL finalization
   - **Data Persistence**: All CRUD operations working with proper database persistence
   - **UI/UX**: Glassmorphic design, dark mode, professional color palette (navy, charcoal, white, blue accents)
   - **Pages**: Dashboard (real-time stats), Themes (with templates), Subsites, Links, Settings
@@ -47,7 +52,7 @@ A futuristic, professional web portal builder with theme customization, logo/ico
 - **Dark Mode**: Professional dark theme with light mode support
 - **Drag-and-Drop**: Optimistic updates with batched backend persistence
 - **Theme Templates**: Curated color palettes for different brand personalities
-- **Image Upload**: URL-based logos and icons (file upload backend pending)
+- **Image Upload**: Complete backend with object storage, validation, and ACL enforcement
 
 ### Design Guidelines
 The application follows a futuristic, professional design approach:
@@ -80,7 +85,9 @@ client/src/
 server/
 ├── routes.ts (API endpoints)
 ├── storage.ts (Database interface)
-└── db.ts (Drizzle database connection)
+├── db.ts (Drizzle database connection)
+├── objectStorage.ts (Object storage service)
+└── objectAcl.ts (ACL policy management)
 
 shared/
 └── schema.ts (TypeScript types and Zod schemas)
@@ -88,18 +95,29 @@ shared/
 
 ## API Routes
 All routes implemented with PostgreSQL persistence:
+
+### Theme Routes
 - `GET /api/themes` - List all themes
 - `POST /api/themes` - Create new theme
 - `PATCH /api/themes/:id` - Update theme
 - `DELETE /api/themes/:id` - Delete theme
+
+### Subsite Routes
 - `GET /api/subsites` - List all subsites (ordered by `order` field)
 - `POST /api/subsites` - Create new subsite
 - `PATCH /api/subsites/:id` - Update subsite (includes reordering)
 - `DELETE /api/subsites/:id` - Delete subsite
+
+### Link Routes
 - `GET /api/links` - List all links (ordered by `order` field)
 - `POST /api/links` - Create new link
 - `PATCH /api/links/:id` - Update link (includes reordering)
 - `DELETE /api/links/:id` - Delete link
+
+### Object Storage Routes
+- `POST /api/objects/upload` - Get presigned URL for direct upload to object storage
+- `GET /objects/:objectPath` - Serve uploaded objects with ACL enforcement
+- `PUT /api/images` - Finalize image upload with validation and ACL policy
 
 ## Running the Project
 The workflow "Start application" runs `npm run dev` which starts:

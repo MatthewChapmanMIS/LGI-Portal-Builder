@@ -1,4 +1,4 @@
-import { ExternalLink, MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { ExternalLink, MoreVertical, Pencil, Trash2, Globe } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -90,6 +90,14 @@ export function SubsiteCard({ subsite, onEdit, onDelete, onClick }: SubsiteCardP
                       return subsite.url;
                     }
                   })()}
+                </span>
+              </div>
+            )}
+            {subsite.customDomain && (
+              <div className="flex items-center gap-1 text-sm text-primary mt-1">
+                <Globe className="h-3 w-3" />
+                <span className="truncate" data-testid={`text-subsite-custom-domain-${subsite.id}`}>
+                  {subsite.customDomain}
                 </span>
               </div>
             )}

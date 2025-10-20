@@ -117,6 +117,7 @@ export default function Subsites() {
       name: "",
       description: "",
       url: "",
+      customDomain: "",
       iconUrl: "",
       parentId: null,
       order: 0,
@@ -186,6 +187,7 @@ export default function Subsites() {
       name: subsite.name,
       description: subsite.description || "",
       url: subsite.url || "",
+      customDomain: subsite.customDomain || "",
       iconUrl: subsite.iconUrl || "",
       parentId: subsite.parentId,
       order: subsite.order,
@@ -379,6 +381,25 @@ export default function Subsites() {
                         type="url"
                         placeholder="https://example.com"
                         data-testid="input-subsite-url"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="customDomain"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Custom Domain (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="portal.example.com"
+                        data-testid="input-subsite-custom-domain"
                         {...field}
                       />
                     </FormControl>

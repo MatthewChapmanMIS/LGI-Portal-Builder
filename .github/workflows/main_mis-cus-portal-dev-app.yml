@@ -34,7 +34,17 @@ jobs:
         with:
           name: node-app
           path: .
+          
+      - name: Run Prisma migrate (deploy)
+        run: npm run migrate:deploy
 
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: mis-cus-portal-dev-app
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_* }}  # Azure created this
+          package: .
+          
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -62,4 +72,5 @@ jobs:
           app-name: 'mis-cus-portal-dev-app'
           slot-name: 'Production'
           package: .
+
           

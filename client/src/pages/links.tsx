@@ -48,6 +48,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/image-upload";
+import { IconPicker } from "@/components/icon-picker";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertLinkSchema, type Link as LinkType, type InsertLink, type Subsite } from "@shared/schema";
@@ -387,6 +388,7 @@ export default function Links() {
                         rows={3}
                         data-testid="input-link-description"
                         {...field}
+                        value={field.value ?? ""}
                       />
                     </FormControl>
                     <FormMessage />
@@ -400,13 +402,23 @@ export default function Links() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Icon</FormLabel>
-                    <FormControl>
-                      <ImageUpload
+                    <div className="space-y-3">
+                      <IconPicker
                         value={field.value}
                         onChange={field.onChange}
-                        label="Upload link icon"
+                        label="Choose from icon library"
                       />
-                    </FormControl>
+                      <div className="flex items-center gap-4">
+                        <div className="h-px flex-1 bg-border" />
+                        <span className="text-xs text-muted-foreground">OR</span>
+                        <div className="h-px flex-1 bg-border" />
+                      </div>
+                      <ImageUpload
+                        value={field.value ?? undefined}
+                        onChange={field.onChange}
+                        label="Upload custom icon"
+                      />
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}

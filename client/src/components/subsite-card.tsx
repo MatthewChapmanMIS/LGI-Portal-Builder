@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Subsite } from "@shared/schema";
+import { getIconByName } from "@/lib/iconLibrary";
 
 interface SubsiteCardProps {
   subsite: Subsite;
@@ -63,18 +64,33 @@ export function SubsiteCard({ subsite, onEdit, onDelete, onClick }: SubsiteCardP
 
       <div className="p-6 space-y-4">
         <div className="flex items-center gap-4">
-          {subsite.iconUrl ? (
-            <img
-              src={subsite.iconUrl}
-              alt={subsite.name}
-              className="h-16 w-16 rounded-lg object-cover"
-              data-testid={`img-subsite-icon-${subsite.id}`}
-            />
-          ) : (
-            <div className="h-16 w-16 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Layers className="h-8 w-8 text-primary" />
-            </div>
-          )}
+          {(() => {
+            const LibraryIcon = subsite.iconUrl ? getIconByName(subsite.iconUrl) : null;
+            const isImageUrl = subsite.iconUrl && (subsite.iconUrl.startsWith('http') || subsite.iconUrl.startsWith('/objects'));
+            
+            if (LibraryIcon) {
+              return (
+                <div className="h-16 w-16 rounded-lg bg-primary/10 flex items-center justify-center" data-testid={`icon-subsite-${subsite.id}`}>
+                  <LibraryIcon className="h-8 w-8 text-primary" />
+                </div>
+              );
+            } else if (isImageUrl) {
+              return (
+                <img
+                  src={subsite.iconUrl}
+                  alt={subsite.name}
+                  className="h-16 w-16 rounded-lg object-cover"
+                  data-testid={`img-subsite-icon-${subsite.id}`}
+                />
+              );
+            } else {
+              return (
+                <div className="h-16 w-16 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Layers className="h-8 w-8 text-primary" />
+                </div>
+              );
+            }
+          })()}
           <div className="flex-1 min-w-0">
             <h3 className="font-display font-semibold text-lg truncate" data-testid={`text-subsite-name-${subsite.id}`}>
               {subsite.name}

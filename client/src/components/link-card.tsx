@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Link as LinkType } from "@shared/schema";
+import { getIconByName } from "@/lib/iconLibrary";
 
 interface LinkCardProps {
   link: LinkType;
@@ -68,18 +69,33 @@ export function LinkCard({ link, onEdit, onDelete }: LinkCardProps) {
 
       <div className="p-6 space-y-3">
         <div className="flex items-start gap-4">
-          {link.iconUrl ? (
-            <img
-              src={link.iconUrl}
-              alt={link.name}
-              className="h-12 w-12 rounded-md object-cover"
-              data-testid={`img-link-icon-${link.id}`}
-            />
-          ) : (
-            <div className="h-12 w-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <ExternalLink className="h-6 w-6 text-primary" />
-            </div>
-          )}
+          {(() => {
+            const LibraryIcon = link.iconUrl ? getIconByName(link.iconUrl) : null;
+            const isImageUrl = link.iconUrl && (link.iconUrl.startsWith('http') || link.iconUrl.startsWith('/objects'));
+            
+            if (LibraryIcon) {
+              return (
+                <div className="h-12 w-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0" data-testid={`icon-link-${link.id}`}>
+                  <LibraryIcon className="h-6 w-6 text-primary" />
+                </div>
+              );
+            } else if (isImageUrl && link.iconUrl) {
+              return (
+                <img
+                  src={link.iconUrl}
+                  alt={link.name}
+                  className="h-12 w-12 rounded-md object-cover"
+                  data-testid={`img-link-icon-${link.id}`}
+                />
+              );
+            } else {
+              return (
+                <div className="h-12 w-12 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <ExternalLink className="h-6 w-6 text-primary" />
+                </div>
+              );
+            }
+          })()}
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold truncate" data-testid={`text-link-name-${link.id}`}>
               {link.name}
@@ -88,6 +104,7 @@ export function LinkCard({ link, onEdit, onDelete }: LinkCardProps) {
               <ExternalLink className="h-3 w-3" />
               <span className="truncate">
                 {(() => {
+                  if (!link.url) return "";
                   try {
                     return new URL(link.url).hostname;
                   } catch {

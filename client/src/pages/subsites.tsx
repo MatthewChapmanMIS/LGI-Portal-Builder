@@ -36,12 +36,7 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertSubsiteSchema, type Subsite, type InsertSubsite } from "@shared/schema";
 import { z } from "zod";
 
-const subsiteFormSchema = insertSubsiteSchema.extend({
-  description: z.string().optional(),
-  iconUrl: z.string().optional(),
-  parentId: z.string().nullable().optional(),
-  order: z.number().default(0),
-});
+const subsiteFormSchema = insertSubsiteSchema;
 
 export default function Subsites() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

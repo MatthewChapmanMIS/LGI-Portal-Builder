@@ -36,11 +36,7 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertLinkSchema, type Link as LinkType, type InsertLink, type Subsite } from "@shared/schema";
 import { z } from "zod";
 
-const linkFormSchema = insertLinkSchema.extend({
-  description: z.string().optional(),
-  iconUrl: z.string().optional(),
-  order: z.number().default(0),
-});
+const linkFormSchema = insertLinkSchema;
 
 export default function Links() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

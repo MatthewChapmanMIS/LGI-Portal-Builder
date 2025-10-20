@@ -4,12 +4,22 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SubsiteCard } from "@/components/subsite-card";
-import type { Subsite } from "@shared/schema";
+import type { Subsite, Theme, Link as LinkType } from "@shared/schema";
 
 export default function Dashboard() {
-  const { data: subsites, isLoading } = useQuery<Subsite[]>({
+  const { data: subsites, isLoading: isLoadingSubsites } = useQuery<Subsite[]>({
     queryKey: ["/api/subsites"],
   });
+
+  const { data: themes, isLoading: isLoadingThemes } = useQuery<Theme[]>({
+    queryKey: ["/api/themes"],
+  });
+
+  const { data: links, isLoading: isLoadingLinks } = useQuery<LinkType[]>({
+    queryKey: ["/api/links"],
+  });
+
+  const isLoading = isLoadingSubsites || isLoadingThemes || isLoadingLinks;
 
   const stats = [
     {
@@ -21,14 +31,14 @@ export default function Dashboard() {
     },
     {
       label: "Active Themes",
-      value: "1",
+      value: themes?.length || 0,
       icon: Palette,
       color: "text-purple-500",
       bgColor: "bg-purple-500/10",
     },
     {
       label: "Total Links",
-      value: "0",
+      value: links?.length || 0,
       icon: LinkIcon,
       color: "text-green-500",
       bgColor: "bg-green-500/10",

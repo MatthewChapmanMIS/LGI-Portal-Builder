@@ -8,10 +8,7 @@ interface TrackEventParams {
 
 export async function trackEvent(params: TrackEventParams) {
   try {
-    await apiRequest("/api/analytics/track", {
-      method: "POST",
-      body: JSON.stringify(params),
-    });
+    await apiRequest("POST", "/api/analytics/track", params);
   } catch (error) {
     console.error("Failed to track event:", error);
   }

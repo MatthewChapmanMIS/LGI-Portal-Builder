@@ -303,7 +303,7 @@ export default function Themes() {
           {!editingTheme && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <FormLabel>Start from Template</FormLabel>
+                <label className="text-sm font-medium">Start from Template</label>
                 {selectedTemplate !== null && (
                   <Button
                     type="button"

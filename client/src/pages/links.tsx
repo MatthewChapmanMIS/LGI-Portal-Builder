@@ -228,7 +228,7 @@ export default function Links() {
             completed++;
             if (completed === itemsToUpdate.length) {
               queryClient.invalidateQueries({ queryKey: ["/api/links"] });
-            },
+            }
           },
         }
       );

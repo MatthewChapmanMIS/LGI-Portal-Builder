@@ -7,9 +7,10 @@ A futuristic, professional web portal builder with theme customization, logo/ico
 - **October 20, 2025**: Complete MVP implementation
   - **Database**: Migrated from in-memory to PostgreSQL with Drizzle ORM and Neon serverless driver
   - **Drag-and-Drop**: Implemented @dnd-kit ordering for subsites and links with optimistic updates
+  - **Theme Templates**: Added 6 curated theme templates (Corporate Blue, Tech Purple, Creative Orange, Minimal Gray, Forest Green, Sunset Red) with auto-fill functionality
   - **Data Persistence**: All CRUD operations working with proper database persistence
   - **UI/UX**: Glassmorphic design, dark mode, professional color palette (navy, charcoal, white, blue accents)
-  - **Pages**: Dashboard (real-time stats), Themes, Subsites, Links, Settings
+  - **Pages**: Dashboard (real-time stats), Themes (with templates), Subsites, Links, Settings
   - **Navigation**: Shadcn UI sidebar with smooth navigation
 
 ## Tech Stack
@@ -39,12 +40,13 @@ A futuristic, professional web portal builder with theme customization, logo/ico
 
 ### Key Features
 - **Dashboard**: Real-time counts for themes, subsites, and links from database queries
-- **Theme Builder**: Visual color picker with live preview
+- **Theme Builder**: Visual color picker with live preview and 6 pre-built templates
 - **Subsite Manager**: Hierarchical organization with drag-and-drop ordering
 - **Link Manager**: External app connections with drag-and-drop ordering
 - **Settings**: Portal configuration and preferences
 - **Dark Mode**: Professional dark theme with light mode support
 - **Drag-and-Drop**: Optimistic updates with batched backend persistence
+- **Theme Templates**: Curated color palettes for different brand personalities
 - **Image Upload**: URL-based logos and icons (file upload backend pending)
 
 ### Design Guidelines

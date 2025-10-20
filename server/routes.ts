@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertThemeSchema, insertSubsiteSchema, insertLinkSchema } from "@shared/schema";
+import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/themes", async (_req, res) => {
@@ -175,6 +176,105 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(204).send();
     } catch (error) {
       res.status(500).json({ error: "Failed to delete link" });
+    }
+  });
+
+  // Object storage routes for file uploads (public file uploading)
+  // Reference: blueprint:javascript_object_storage
+  
+  // Get upload URL for new file
+  app.post("/api/objects/upload", async (_req, res) => {
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting upload URL:", error);
+      res.status(500).json({ error: "Failed to get upload URL" });
+    }
+  });
+
+  // Serve uploaded objects with ACL enforcement
+  app.get("/objects/:objectPath(*)", async (req, res) => {
+    const objectStorageService = new ObjectStorageService();
+    try {
+      const objectFile = await objectStorageService.getObjectEntityFile(
+        req.path,
+      );
+      
+      // Check ACL permissions (no userId since no auth yet)
+      const canAccess = await objectStorageService.canAccessObjectEntity({
+        objectFile,
+        userId: undefined, // No auth system yet
+      });
+      
+      if (!canAccess) {
+        return res.sendStatus(403);
+      }
+      
+      objectStorageService.downloadObject(objectFile, res);
+    } catch (error) {
+      console.error("Error serving object:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.sendStatus(404);
+      }
+      return res.sendStatus(500);
+    }
+  });
+
+  // Finalize uploaded image - validate and set ACL
+  app.put("/api/images", async (req, res) => {
+    if (!req.body.imageURL) {
+      return res.status(400).json({ error: "imageURL is required" });
+    }
+
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const normalizedPath = objectStorageService.normalizeObjectEntityPath(
+        req.body.imageURL,
+      );
+
+      // Verify the uploaded file exists
+      const objectFile = await objectStorageService.getObjectEntityFile(normalizedPath);
+      
+      // Get metadata to validate it's an image
+      const [metadata] = await objectFile.getMetadata();
+      const contentType = metadata.contentType || '';
+      
+      // Validate it's an image
+      if (!contentType.startsWith('image/')) {
+        // Delete invalid upload
+        await objectFile.delete();
+        return res.status(400).json({ error: "File must be an image" });
+      }
+      
+      // Validate file size (10MB max)
+      const sizeInBytes = parseInt(String(metadata.size || '0'));
+      if (sizeInBytes > 10485760) {
+        await objectFile.delete();
+        return res.status(400).json({ error: "File too large (max 10MB)" });
+      }
+
+      // Set public ACL policy for the uploaded image
+      await objectStorageService.trySetObjectEntityAclPolicy(
+        req.body.imageURL,
+        {
+          owner: "system", // No auth yet, use system as owner
+          visibility: "public", // Portal logos/icons should be public
+        }
+      );
+
+      res.status(200).json({
+        objectPath: normalizedPath,
+        contentType,
+        size: sizeInBytes,
+      });
+    } catch (error) {
+      console.error("Error processing image URL:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.status(404).json({ error: "Uploaded file not found" });
+      }
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 

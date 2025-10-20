@@ -2,7 +2,24 @@ import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Link as LinkIcon } from "lucide-react";
+import { Plus, Link as LinkIcon, GripVertical } from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { LinkCard } from "@/components/link-card";
@@ -37,6 +54,42 @@ import { insertLinkSchema, type Link as LinkType, type InsertLink, type Subsite 
 import { z } from "zod";
 
 const linkFormSchema = insertLinkSchema;
+
+interface SortableLinkItemProps {
+  link: LinkType;
+  onEdit: (link: LinkType) => void;
+  onDelete: (id: string) => void;
+}
+
+function SortableLinkItem({ link, onEdit, onDelete }: SortableLinkItemProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: link.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} className="relative">
+      <div
+        className="absolute -left-8 top-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing z-10"
+        {...attributes}
+        {...listeners}
+      >
+        <GripVertical className="h-5 w-5 text-muted-foreground" />
+      </div>
+      <LinkCard link={link} onEdit={onEdit} onDelete={onDelete} />
+    </div>
+  );
+}
 
 export default function Links() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -99,6 +152,15 @@ export default function Links() {
     },
   });
 
+  const reorderMutation = useMutation({
+    mutationFn: ({ id, order }: { id: string; order: number }) =>
+      apiRequest("PATCH", `/api/links/${id}`, { order }),
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/links"] });
+      toast({ title: "Failed to reorder links", variant: "destructive" });
+    },
+  });
+
   const handleSubmit = (data: z.infer<typeof linkFormSchema>) => {
     if (editingLink) {
       updateMutation.mutate({ id: editingLink.id, data });
@@ -128,6 +190,51 @@ export default function Links() {
     }
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (!over || active.id === over.id || !links) return;
+
+    const activeIndex = links.findIndex(l => l.id === active.id);
+    const overIndex = links.findIndex(l => l.id === over.id);
+
+    const originalOrderById: Record<string, number> = {};
+    links.forEach(l => {
+      originalOrderById[l.id] = l.order;
+    });
+
+    const reordered = arrayMove(links, activeIndex, overIndex).map((l, index) => ({
+      ...l,
+      order: index,
+    }));
+    
+    queryClient.setQueryData(["/api/links"], reordered);
+    
+    const itemsToUpdate = reordered.filter(l => originalOrderById[l.id] !== l.order);
+    let completed = 0;
+    
+    itemsToUpdate.forEach((link) => {
+      reorderMutation.mutate(
+        { id: link.id, order: link.order },
+        {
+          onSettled: () => {
+            completed++;
+            if (completed === itemsToUpdate.length) {
+              queryClient.invalidateQueries({ queryKey: ["/api/links"] });
+            },
+          },
+        }
+      );
+    });
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -155,16 +262,27 @@ export default function Links() {
           ))}
         </div>
       ) : links && links.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {links.map((link) => (
-            <LinkCard
-              key={link.id}
-              link={link}
-              onEdit={handleEdit}
-              onDelete={(id) => deleteMutation.mutate(id)}
-            />
-          ))}
-        </div>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={links.map(l => l.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {links.map((link) => (
+                <SortableLinkItem
+                  key={link.id}
+                  link={link}
+                  onEdit={handleEdit}
+                  onDelete={(id) => deleteMutation.mutate(id)}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
       ) : (
         <Card className="p-12 text-center">
           <LinkIcon className="h-16 w-16 mx-auto text-muted-foreground mb-4" />

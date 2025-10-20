@@ -3,6 +3,23 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Layers, GripVertical } from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SubsiteCard } from "@/components/subsite-card";
@@ -37,6 +54,57 @@ import { insertSubsiteSchema, type Subsite, type InsertSubsite } from "@shared/s
 import { z } from "zod";
 
 const subsiteFormSchema = insertSubsiteSchema;
+
+interface SortableSubsiteItemProps {
+  subsite: Subsite;
+  childSubsites: Subsite[];
+  onEdit: (subsite: Subsite) => void;
+  onDelete: (id: string) => void;
+}
+
+function SortableSubsiteItem({ subsite, childSubsites, onEdit, onDelete }: SortableSubsiteItemProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: subsite.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} className="space-y-4">
+      <div className="relative">
+        <div
+          className="absolute -left-8 top-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing"
+          {...attributes}
+          {...listeners}
+        >
+          <GripVertical className="h-5 w-5 text-muted-foreground" />
+        </div>
+        <SubsiteCard subsite={subsite} onEdit={onEdit} onDelete={onDelete} />
+      </div>
+      {childSubsites.length > 0 && (
+        <div className="ml-8 space-y-4">
+          {childSubsites.map((child) => (
+            <div key={child.id} className="flex items-start gap-2">
+              <GripVertical className="h-5 w-5 text-muted-foreground mt-2 flex-shrink-0" />
+              <div className="flex-1">
+                <SubsiteCard subsite={child} onEdit={onEdit} onDelete={onDelete} />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Subsites() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -95,6 +163,15 @@ export default function Subsites() {
     },
   });
 
+  const reorderMutation = useMutation({
+    mutationFn: ({ id, order }: { id: string; order: number }) =>
+      apiRequest("PATCH", `/api/subsites/${id}`, { order }),
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/subsites"] });
+      toast({ title: "Failed to reorder subsites", variant: "destructive" });
+    },
+  });
+
   const handleSubmit = (data: z.infer<typeof subsiteFormSchema>) => {
     if (editingSubsite) {
       updateMutation.mutate({ id: editingSubsite.id, data });
@@ -122,6 +199,51 @@ export default function Subsites() {
       setEditingSubsite(null);
       form.reset();
     }
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (!over || active.id === over.id || !subsites) return;
+
+    const activeIndex = subsites.findIndex(s => s.id === active.id);
+    const overIndex = subsites.findIndex(s => s.id === over.id);
+
+    const originalOrderById: Record<string, number> = {};
+    subsites.forEach(s => {
+      originalOrderById[s.id] = s.order;
+    });
+
+    const reordered = arrayMove(subsites, activeIndex, overIndex).map((s, index) => ({
+      ...s,
+      order: index,
+    }));
+    
+    queryClient.setQueryData(["/api/subsites"], reordered);
+    
+    const itemsToUpdate = reordered.filter(s => originalOrderById[s.id] !== s.order);
+    let completed = 0;
+    
+    itemsToUpdate.forEach((subsite) => {
+      reorderMutation.mutate(
+        { id: subsite.id, order: subsite.order },
+        {
+          onSettled: () => {
+            completed++;
+            if (completed === itemsToUpdate.length) {
+              queryClient.invalidateQueries({ queryKey: ["/api/subsites"] });
+            }
+          },
+        }
+      );
+    });
   };
 
   const parentSubsites = subsites?.filter(s => !s.parentId) || [];
@@ -155,35 +277,30 @@ export default function Subsites() {
           ))}
         </div>
       ) : subsites && subsites.length > 0 ? (
-        <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {parentSubsites.map((subsite) => (
-              <div key={subsite.id} className="space-y-4">
-                <SubsiteCard
-                  subsite={subsite}
-                  onEdit={handleEdit}
-                  onDelete={(id) => deleteMutation.mutate(id)}
-                />
-                {childSubsites(subsite.id).length > 0 && (
-                  <div className="ml-8 space-y-4">
-                    {childSubsites(subsite.id).map((child) => (
-                      <div key={child.id} className="flex items-start gap-2">
-                        <GripVertical className="h-5 w-5 text-muted-foreground mt-2 flex-shrink-0" />
-                        <div className="flex-1">
-                          <SubsiteCard
-                            subsite={child}
-                            onEdit={handleEdit}
-                            onDelete={(id) => deleteMutation.mutate(id)}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={subsites.map(s => s.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {parentSubsites.map((subsite) => (
+                  <SortableSubsiteItem
+                    key={subsite.id}
+                    subsite={subsite}
+                    childSubsites={childSubsites(subsite.id)}
+                    onEdit={handleEdit}
+                    onDelete={(id) => deleteMutation.mutate(id)}
+                  />
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          </SortableContext>
+        </DndContext>
       ) : (
         <Card className="p-12 text-center">
           <Layers className="h-16 w-16 mx-auto text-muted-foreground mb-4" />

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { Subsite } from "@shared/schema";
 import { getIconByName } from "@/lib/iconLibrary";
+import { trackEvent } from "@/lib/analytics";
 
 interface SubsiteCardProps {
   subsite: Subsite;
@@ -18,10 +19,19 @@ interface SubsiteCardProps {
 }
 
 export function SubsiteCard({ subsite, onEdit, onDelete, onClick }: SubsiteCardProps) {
+  const handleClick = () => {
+    trackEvent({
+      eventType: "view",
+      resourceType: "subsite",
+      resourceId: subsite.id,
+    });
+    onClick?.(subsite);
+  };
+
   return (
     <Card
       className="group relative overflow-hidden hover-elevate active-elevate-2 cursor-pointer transition-all duration-300"
-      onClick={() => onClick?.(subsite)}
+      onClick={handleClick}
       data-testid={`card-subsite-${subsite.id}`}
     >
       <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity">

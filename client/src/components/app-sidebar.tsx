@@ -1,4 +1,4 @@
-import { Home, Palette, Layers, Link as LinkIcon, Settings } from "lucide-react";
+import { Home, Palette, Layers, Link as LinkIcon, BarChart3, Settings } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import {
   Sidebar,
@@ -36,6 +36,12 @@ const menuItems = [
     url: "/links",
     icon: LinkIcon,
     testId: "link-links",
+  },
+  {
+    title: "Analytics",
+    url: "/analytics",
+    icon: BarChart3,
+    testId: "link-analytics",
   },
   {
     title: "Settings",

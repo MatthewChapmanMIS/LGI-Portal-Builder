@@ -11,6 +11,7 @@ import Dashboard from "@/pages/dashboard";
 import Themes from "@/pages/themes";
 import Subsites from "@/pages/subsites";
 import Links from "@/pages/links";
+import Analytics from "@/pages/analytics";
 import Settings from "@/pages/settings";
 import NotFound from "@/pages/not-found";
 
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/themes" component={Themes} />
       <Route path="/subsites" component={Subsites} />
       <Route path="/links" component={Links} />
+      <Route path="/analytics" component={Analytics} />
       <Route path="/settings" component={Settings} />
       <Route component={NotFound} />
     </Switch>

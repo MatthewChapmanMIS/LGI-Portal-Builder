@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { Link as LinkType } from "@shared/schema";
 import { getIconByName } from "@/lib/iconLibrary";
+import { trackEvent } from "@/lib/analytics";
 
 interface LinkCardProps {
   link: LinkType;
@@ -18,6 +19,11 @@ interface LinkCardProps {
 
 export function LinkCard({ link, onEdit, onDelete }: LinkCardProps) {
   const openLink = () => {
+    trackEvent({
+      eventType: "click",
+      resourceType: "link",
+      resourceId: link.id,
+    });
     if (link.url) {
       window.open(link.url, "_blank", "noopener,noreferrer");
     }

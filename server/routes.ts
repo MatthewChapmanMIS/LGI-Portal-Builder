@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertThemeSchema, insertSubsiteSchema, insertLinkSchema } from "@shared/schema";
+import { insertThemeSchema, insertSubsiteSchema, insertLinkSchema, insertAnalyticsSchema } from "@shared/schema";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -275,6 +275,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Uploaded file not found" });
       }
       res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Analytics routes
+  app.post("/api/analytics/track", async (req, res) => {
+    try {
+      const data = insertAnalyticsSchema.parse(req.body);
+      const event = await storage.trackEvent(data);
+      res.status(201).json(event);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid analytics data" });
+    }
+  });
+
+  app.get("/api/analytics/summary", async (_req, res) => {
+    try {
+      const summary = await storage.getAnalyticsSummary();
+      res.json(summary);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch analytics summary" });
+    }
+  });
+
+  app.get("/api/analytics/top-subsites", async (req, res) => {
+    try {
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 5;
+      const topSubsites = await storage.getTopSubsites(limit);
+      res.json(topSubsites);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch top subsites" });
+    }
+  });
+
+  app.get("/api/analytics/top-links", async (req, res) => {
+    try {
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 5;
+      const topLinks = await storage.getTopLinks(limit);
+      res.json(topLinks);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch top links" });
+    }
+  });
+
+  app.get("/api/analytics/recent", async (req, res) => {
+    try {
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
+      const recentActivity = await storage.getRecentActivity(limit);
+      res.json(recentActivity);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch recent activity" });
     }
   });
 

@@ -5,13 +5,16 @@ import {
   type InsertSubsite,
   type Link,
   type InsertLink,
+  type Analytics,
+  type InsertAnalytics,
   themes,
   subsites,
   links,
+  analytics,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc, sql, and, gte } from "drizzle-orm";
 
 export interface IStorage {
   getThemes(): Promise<Theme[]>;
@@ -32,17 +35,25 @@ export interface IStorage {
   createLink(link: InsertLink): Promise<Link>;
   updateLink(id: string, link: Partial<Link>): Promise<Link | undefined>;
   deleteLink(id: string): Promise<boolean>;
+
+  trackEvent(event: InsertAnalytics): Promise<Analytics>;
+  getAnalyticsSummary(): Promise<{ subsiteViews: number; linkClicks: number; totalEvents: number }>;
+  getTopSubsites(limit?: number): Promise<Array<{ id: string; name: string; views: number }>>;
+  getTopLinks(limit?: number): Promise<Array<{ id: string; name: string; clicks: number }>>;
+  getRecentActivity(limit?: number): Promise<Analytics[]>;
 }
 
 export class MemStorage implements IStorage {
   private themes: Map<string, Theme>;
   private subsites: Map<string, Subsite>;
   private links: Map<string, Link>;
+  private analyticsEvents: Analytics[];
 
   constructor() {
     this.themes = new Map();
     this.subsites = new Map();
     this.links = new Map();
+    this.analyticsEvents = [];
   }
 
   async getThemes(): Promise<Theme[]> {
@@ -138,6 +149,63 @@ export class MemStorage implements IStorage {
 
   async deleteLink(id: string): Promise<boolean> {
     return this.links.delete(id);
+  }
+
+  async trackEvent(event: InsertAnalytics): Promise<Analytics> {
+    const id = randomUUID();
+    const analyticsEvent: Analytics = { ...event, id, timestamp: new Date() };
+    this.analyticsEvents.push(analyticsEvent);
+    return analyticsEvent;
+  }
+
+  async getAnalyticsSummary(): Promise<{ subsiteViews: number; linkClicks: number; totalEvents: number }> {
+    const subsiteViews = this.analyticsEvents.filter(e => e.eventType === 'view' && e.resourceType === 'subsite').length;
+    const linkClicks = this.analyticsEvents.filter(e => e.eventType === 'click' && e.resourceType === 'link').length;
+    return {
+      subsiteViews,
+      linkClicks,
+      totalEvents: this.analyticsEvents.length,
+    };
+  }
+
+  async getTopSubsites(limit: number = 5): Promise<Array<{ id: string; name: string; views: number }>> {
+    const counts = new Map<string, number>();
+    this.analyticsEvents
+      .filter(e => e.eventType === 'view' && e.resourceType === 'subsite')
+      .forEach(e => counts.set(e.resourceId, (counts.get(e.resourceId) || 0) + 1));
+    
+    const sorted = Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit);
+    
+    return sorted.map(([id, views]) => ({
+      id,
+      name: this.subsites.get(id)?.name || 'Unknown',
+      views,
+    }));
+  }
+
+  async getTopLinks(limit: number = 5): Promise<Array<{ id: string; name: string; clicks: number }>> {
+    const counts = new Map<string, number>();
+    this.analyticsEvents
+      .filter(e => e.eventType === 'click' && e.resourceType === 'link')
+      .forEach(e => counts.set(e.resourceId, (counts.get(e.resourceId) || 0) + 1));
+    
+    const sorted = Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit);
+    
+    return sorted.map(([id, clicks]) => ({
+      id,
+      name: this.links.get(id)?.name || 'Unknown',
+      clicks,
+    }));
+  }
+
+  async getRecentActivity(limit: number = 10): Promise<Analytics[]> {
+    return this.analyticsEvents
+      .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
+      .slice(0, limit);
   }
 }
 
@@ -236,6 +304,94 @@ export class DatabaseStorage implements IStorage {
   async deleteLink(id: string): Promise<boolean> {
     const result = await db.delete(links).where(eq(links.id, id));
     return result.rowCount !== null && result.rowCount > 0;
+  }
+
+  async trackEvent(event: InsertAnalytics): Promise<Analytics> {
+    const [analyticsEvent] = await db.insert(analytics).values(event).returning();
+    return analyticsEvent;
+  }
+
+  async getAnalyticsSummary(): Promise<{ subsiteViews: number; linkClicks: number; totalEvents: number }> {
+    const subsiteViews = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(analytics)
+      .where(and(eq(analytics.eventType, 'view'), eq(analytics.resourceType, 'subsite')));
+
+    const linkClicks = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(analytics)
+      .where(and(eq(analytics.eventType, 'click'), eq(analytics.resourceType, 'link')));
+
+    const totalEvents = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(analytics);
+
+    return {
+      subsiteViews: subsiteViews[0]?.count || 0,
+      linkClicks: linkClicks[0]?.count || 0,
+      totalEvents: totalEvents[0]?.count || 0,
+    };
+  }
+
+  async getTopSubsites(limit: number = 5): Promise<Array<{ id: string; name: string; views: number }>> {
+    const topSubsiteIds = await db
+      .select({ 
+        resourceId: analytics.resourceId, 
+        count: sql<number>`count(*)::int`.as('count')
+      })
+      .from(analytics)
+      .where(and(eq(analytics.eventType, 'view'), eq(analytics.resourceType, 'subsite')))
+      .groupBy(analytics.resourceId)
+      .orderBy(desc(sql`count(*)`))
+      .limit(limit);
+
+    const results = await Promise.all(
+      topSubsiteIds.map(async ({ resourceId, count }) => {
+        const subsite = await this.getSubsite(resourceId);
+        return {
+          id: resourceId,
+          name: subsite?.name || 'Unknown',
+          views: count,
+        };
+      })
+    );
+
+    return results;
+  }
+
+  async getTopLinks(limit: number = 5): Promise<Array<{ id: string; name: string; clicks: number }>> {
+    const topLinkIds = await db
+      .select({ 
+        resourceId: analytics.resourceId, 
+        count: sql<number>`count(*)::int`.as('count')
+      })
+      .from(analytics)
+      .where(and(eq(analytics.eventType, 'click'), eq(analytics.resourceType, 'link')))
+      .groupBy(analytics.resourceId)
+      .orderBy(desc(sql`count(*)`))
+      .limit(limit);
+
+    const results = await Promise.all(
+      topLinkIds.map(async ({ resourceId, count }) => {
+        const link = await this.getLink(resourceId);
+        return {
+          id: resourceId,
+          name: link?.name || 'Unknown',
+          clicks: count,
+        };
+      })
+    );
+
+    return results;
+  }
+
+  async getRecentActivity(limit: number = 10): Promise<Analytics[]> {
+    const results = await db
+      .select()
+      .from(analytics)
+      .orderBy(desc(analytics.timestamp))
+      .limit(limit);
+    return results;
   }
 }
 

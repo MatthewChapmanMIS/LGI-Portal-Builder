@@ -5,8 +5,13 @@ import {
   type InsertSubsite,
   type Link,
   type InsertLink,
+  themes,
+  subsites,
+  links,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getThemes(): Promise<Theme[]>;
@@ -136,4 +141,102 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getThemes(): Promise<Theme[]> {
+    return await db.select().from(themes);
+  }
+
+  async getTheme(id: string): Promise<Theme | undefined> {
+    const [theme] = await db.select().from(themes).where(eq(themes.id, id));
+    return theme || undefined;
+  }
+
+  async createTheme(insertTheme: InsertTheme): Promise<Theme> {
+    const [theme] = await db.insert(themes).values(insertTheme).returning();
+    return theme;
+  }
+
+  async updateTheme(id: string, themeData: Partial<Theme>): Promise<Theme | undefined> {
+    const [theme] = await db
+      .update(themes)
+      .set(themeData)
+      .where(eq(themes.id, id))
+      .returning();
+    return theme || undefined;
+  }
+
+  async deleteTheme(id: string): Promise<boolean> {
+    const result = await db.delete(themes).where(eq(themes.id, id));
+    return result.rowCount !== null && result.rowCount > 0;
+  }
+
+  async getSubsites(): Promise<Subsite[]> {
+    const results = await db.select().from(subsites).orderBy(subsites.order);
+    return results;
+  }
+
+  async getSubsite(id: string): Promise<Subsite | undefined> {
+    const [subsite] = await db.select().from(subsites).where(eq(subsites.id, id));
+    return subsite || undefined;
+  }
+
+  async createSubsite(insertSubsite: InsertSubsite): Promise<Subsite> {
+    const [subsite] = await db.insert(subsites).values(insertSubsite).returning();
+    return subsite;
+  }
+
+  async updateSubsite(id: string, subsiteData: Partial<Subsite>): Promise<Subsite | undefined> {
+    const [subsite] = await db
+      .update(subsites)
+      .set(subsiteData)
+      .where(eq(subsites.id, id))
+      .returning();
+    return subsite || undefined;
+  }
+
+  async deleteSubsite(id: string): Promise<boolean> {
+    await db.delete(links).where(eq(links.subsiteId, id));
+    const result = await db.delete(subsites).where(eq(subsites.id, id));
+    return result.rowCount !== null && result.rowCount > 0;
+  }
+
+  async getLinks(): Promise<Link[]> {
+    const results = await db.select().from(links).orderBy(links.order);
+    return results;
+  }
+
+  async getLinksBySubsite(subsiteId: string): Promise<Link[]> {
+    const results = await db
+      .select()
+      .from(links)
+      .where(eq(links.subsiteId, subsiteId))
+      .orderBy(links.order);
+    return results;
+  }
+
+  async getLink(id: string): Promise<Link | undefined> {
+    const [link] = await db.select().from(links).where(eq(links.id, id));
+    return link || undefined;
+  }
+
+  async createLink(insertLink: InsertLink): Promise<Link> {
+    const [link] = await db.insert(links).values(insertLink).returning();
+    return link;
+  }
+
+  async updateLink(id: string, linkData: Partial<Link>): Promise<Link | undefined> {
+    const [link] = await db
+      .update(links)
+      .set(linkData)
+      .where(eq(links.id, id))
+      .returning();
+    return link || undefined;
+  }
+
+  async deleteLink(id: string): Promise<boolean> {
+    const result = await db.delete(links).where(eq(links.id, id));
+    return result.rowCount !== null && result.rowCount > 0;
+  }
+}
+
+export const storage = new DatabaseStorage();

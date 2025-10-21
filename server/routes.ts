@@ -90,6 +90,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/subsites/:id/breadcrumb", async (req, res) => {
+    try {
+      const trail = await storage.getBreadcrumbTrail(req.params.id);
+      res.json(trail);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch breadcrumb trail" });
+    }
+  });
+
   app.post("/api/subsites", async (req, res) => {
     try {
       const data = insertSubsiteSchema.parse(req.body);

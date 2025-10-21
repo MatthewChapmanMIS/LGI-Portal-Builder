@@ -26,6 +26,7 @@ export interface IStorage {
   getSubsites(): Promise<Subsite[]>;
   getSubsite(id: string): Promise<Subsite | undefined>;
   getChildSubsites(parentId: string): Promise<Subsite[]>;
+  getBreadcrumbTrail(subsiteId: string): Promise<Subsite[]>;
   createSubsite(subsite: InsertSubsite): Promise<Subsite>;
   updateSubsite(id: string, subsite: Partial<Subsite>): Promise<Subsite | undefined>;
   deleteSubsite(id: string): Promise<boolean>;
@@ -97,6 +98,21 @@ export class MemStorage implements IStorage {
     return Array.from(this.subsites.values())
       .filter(subsite => subsite.parentId === parentId)
       .sort((a, b) => a.order - b.order);
+  }
+
+  async getBreadcrumbTrail(subsiteId: string): Promise<Subsite[]> {
+    const trail: Subsite[] = [];
+    let currentId: string | null = subsiteId;
+
+    while (currentId) {
+      const subsite = this.subsites.get(currentId);
+      if (!subsite) break;
+      
+      trail.unshift(subsite);
+      currentId = subsite.parentId;
+    }
+
+    return trail;
   }
 
   async createSubsite(insertSubsite: InsertSubsite): Promise<Subsite> {
@@ -262,6 +278,21 @@ export class DatabaseStorage implements IStorage {
       .where(eq(subsites.parentId, parentId))
       .orderBy(subsites.order);
     return results;
+  }
+
+  async getBreadcrumbTrail(subsiteId: string): Promise<Subsite[]> {
+    const trail: Subsite[] = [];
+    let currentId: string | null = subsiteId;
+
+    while (currentId) {
+      const subsite = await this.getSubsite(currentId);
+      if (!subsite) break;
+      
+      trail.unshift(subsite);
+      currentId = subsite.parentId;
+    }
+
+    return trail;
   }
 
   async createSubsite(insertSubsite: InsertSubsite): Promise<Subsite> {

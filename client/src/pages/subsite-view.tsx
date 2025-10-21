@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { LinkCard } from "@/components/link-card";
 import { SubsiteCard } from "@/components/subsite-card";
+import { Breadcrumb } from "@/components/breadcrumb";
 import { getIconByName } from "@/lib/iconLibrary";
 import { trackEvent } from "@/lib/analytics";
 import type { Subsite, Link as LinkType } from "@shared/schema";
@@ -132,15 +133,8 @@ export default function SubsiteView() {
 
   return (
     <div className="space-y-8">
-      {/* Breadcrumb placeholder - will be implemented later */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="sm" asChild data-testid="button-back-to-subsites">
-          <WouterLink href="/subsites">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Subsites
-          </WouterLink>
-        </Button>
-      </div>
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb subsite={subsite} />
 
       {/* Hero Section */}
       <Card className="p-8 bg-gradient-to-br from-primary/5 to-transparent">

@@ -4,6 +4,23 @@
 A futuristic, professional web portal builder with theme customization, logo/icon management, and hierarchical subsite organization. Inspired by the Lauridsen Group website's professional aesthetic with a modern, glassmorphic design system.
 
 ## Recent Changes
+- **October 21, 2025**: Subsite Viewer Implementation
+  - **Subsite Pages**: Navigate to individual subsites to view content and links
+    - Beautiful hero section with subsite branding (icon, name, description, domain)
+    - Link grid display showing all applications for the subsite
+    - Child subsites section for hierarchical drill-down navigation
+    - Breadcrumb navigation showing ancestry trail (Home > Parent > Current)
+    - Analytics tracking for subsite views
+  - **Backend API**: 4 new routes for subsite viewing
+    - GET /api/subsites/:id - Retrieve single subsite
+    - GET /api/subsites/:id/links - Get links for subsite
+    - GET /api/subsites/:id/children - Get child subsites
+    - GET /api/subsites/:id/breadcrumb - Get full ancestor chain
+  - **Breadcrumb Component**: Efficient hierarchical navigation
+    - Single backend query returns full ancestor trail
+    - Clickable breadcrumb links for navigating up hierarchy
+    - Professional design matching glassmorphic aesthetic
+
 - **October 20, 2025**: Complete MVP implementation with advanced features
   - **Database**: Migrated from in-memory to PostgreSQL with Drizzle ORM and Neon serverless driver
   - **Drag-and-Drop**: Implemented @dnd-kit ordering for subsites and links with optimistic updates
@@ -64,6 +81,13 @@ A futuristic, professional web portal builder with theme customization, logo/ico
 - **Dashboard**: Real-time counts for themes, subsites, and links from database queries
 - **Theme Builder**: Visual color picker with live preview and 6 pre-built templates
 - **Subsite Manager**: Hierarchical organization with drag-and-drop ordering, custom domains
+- **Subsite Viewer**: Public-facing pages for each subsite
+  - Hero section with branding (icon, name, description, custom domain)
+  - Grid display of all links belonging to the subsite
+  - Hierarchical navigation with breadcrumb trail
+  - Child subsites displayed for drill-down navigation
+  - Professional glassmorphic design
+  - Analytics tracking for page views
 - **Link Manager**: External app connections with drag-and-drop ordering
 - **Analytics Dashboard**: Engagement tracking with metrics, charts, and leaderboards
   - View tracking for subsites, click tracking for links
@@ -91,6 +115,7 @@ client/src/
 ├── components/
 │   ├── ui/ (Shadcn components)
 │   ├── app-sidebar.tsx
+│   ├── breadcrumb.tsx (Hierarchical navigation)
 │   ├── theme-provider.tsx
 │   ├── theme-toggle.tsx
 │   ├── subsite-card.tsx
@@ -105,6 +130,7 @@ client/src/
 │   ├── dashboard.tsx
 │   ├── themes.tsx
 │   ├── subsites.tsx
+│   ├── subsite-view.tsx (Subsite viewer page)
 │   ├── links.tsx
 │   ├── analytics.tsx
 │   └── settings.tsx
@@ -132,6 +158,10 @@ All routes implemented with PostgreSQL persistence:
 
 ### Subsite Routes
 - `GET /api/subsites` - List all subsites (ordered by `order` field)
+- `GET /api/subsites/:id` - Get single subsite by ID
+- `GET /api/subsites/:id/links` - Get all links for a specific subsite
+- `GET /api/subsites/:id/children` - Get child subsites (where parentId matches)
+- `GET /api/subsites/:id/breadcrumb` - Get full ancestor chain from root to current
 - `POST /api/subsites` - Create new subsite
 - `PATCH /api/subsites/:id` - Update subsite (includes reordering)
 - `DELETE /api/subsites/:id` - Delete subsite

@@ -81,6 +81,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/subsites/:id/children", async (req, res) => {
+    try {
+      const children = await storage.getChildSubsites(req.params.id);
+      res.json(children);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch child subsites" });
+    }
+  });
+
   app.post("/api/subsites", async (req, res) => {
     try {
       const data = insertSubsiteSchema.parse(req.body);

@@ -10,6 +10,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import Dashboard from "@/pages/dashboard";
 import Themes from "@/pages/themes";
 import Subsites from "@/pages/subsites";
+import SubsiteView from "@/pages/subsite-view";
 import Links from "@/pages/links";
 import Analytics from "@/pages/analytics";
 import Settings from "@/pages/settings";
@@ -20,6 +21,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route path="/themes" component={Themes} />
+      <Route path="/subsites/:id" component={SubsiteView} />
       <Route path="/subsites" component={Subsites} />
       <Route path="/links" component={Links} />
       <Route path="/analytics" component={Analytics} />

@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { Plus, Palette, Layers, Link as LinkIcon, TrendingUp } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SubsiteCard } from "@/components/subsite-card";
 import type { Subsite, Theme, Link as LinkType } from "@shared/schema";
 
 export default function Dashboard() {
+  const [, setLocation] = useLocation();
   const { data: subsites, isLoading: isLoadingSubsites } = useQuery<Subsite[]>({
     queryKey: ["/api/subsites"],
   });
@@ -106,7 +107,11 @@ export default function Dashboard() {
         ) : subsites && subsites.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {subsites.slice(0, 6).map((subsite) => (
-              <SubsiteCard key={subsite.id} subsite={subsite} />
+              <SubsiteCard 
+                key={subsite.id} 
+                subsite={subsite}
+                onClick={(s) => setLocation(`/subsites/${s.id}`)}
+              />
             ))}
           </div>
         ) : (

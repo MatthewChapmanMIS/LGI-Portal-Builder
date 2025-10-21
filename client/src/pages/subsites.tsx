@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocation } from "wouter";
 import { Plus, Layers, GripVertical } from "lucide-react";
 import {
   DndContext,
@@ -61,9 +62,10 @@ interface SortableSubsiteItemProps {
   childSubsites: Subsite[];
   onEdit: (subsite: Subsite) => void;
   onDelete: (id: string) => void;
+  onClick: (subsite: Subsite) => void;
 }
 
-function SortableSubsiteItem({ subsite, childSubsites, onEdit, onDelete }: SortableSubsiteItemProps) {
+function SortableSubsiteItem({ subsite, childSubsites, onEdit, onDelete, onClick }: SortableSubsiteItemProps) {
   const {
     attributes,
     listeners,
@@ -89,7 +91,7 @@ function SortableSubsiteItem({ subsite, childSubsites, onEdit, onDelete }: Sorta
         >
           <GripVertical className="h-5 w-5 text-muted-foreground" />
         </div>
-        <SubsiteCard subsite={subsite} onEdit={onEdit} onDelete={onDelete} />
+        <SubsiteCard subsite={subsite} onEdit={onEdit} onDelete={onDelete} onClick={onClick} />
       </div>
       {childSubsites.length > 0 && (
         <div className="ml-8 space-y-4">
@@ -97,7 +99,7 @@ function SortableSubsiteItem({ subsite, childSubsites, onEdit, onDelete }: Sorta
             <div key={child.id} className="flex items-start gap-2">
               <GripVertical className="h-5 w-5 text-muted-foreground mt-2 flex-shrink-0" />
               <div className="flex-1">
-                <SubsiteCard subsite={child} onEdit={onEdit} onDelete={onDelete} />
+                <SubsiteCard subsite={child} onEdit={onEdit} onDelete={onDelete} onClick={onClick} />
               </div>
             </div>
           ))}
@@ -111,6 +113,7 @@ export default function Subsites() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingSubsite, setEditingSubsite] = useState<Subsite | null>(null);
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   const form = useForm<z.infer<typeof subsiteFormSchema>>({
     resolver: zodResolver(subsiteFormSchema),
@@ -298,6 +301,7 @@ export default function Subsites() {
                     childSubsites={childSubsites(subsite.id)}
                     onEdit={handleEdit}
                     onDelete={(id) => deleteMutation.mutate(id)}
+                    onClick={(s) => setLocation(`/subsites/${s.id}`)}
                   />
                 ))}
               </div>

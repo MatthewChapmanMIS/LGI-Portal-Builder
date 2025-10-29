@@ -1,0 +1,450 @@
+2025-10-29T00:38:12.7103377Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:12.7124002Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:12.7124336Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:12.7124371Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:12.7124396Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:12.712443Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:12.7140876Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:38:12.7148268Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:12.7148599Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:12.7149446Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:12.715087Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:12.7154593Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:12.7155888Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:12.7157018Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:12.7158068Z [Auth] Querying database for users...
+2025-10-29T00:38:12.7186237Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:12.7187614Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:12.718779Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:12.7188902Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:12.7189709Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:12.7190555Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:12.8142654Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:38:12.8148259Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:38:12.8155276Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:38:12.8155578Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:38:12.8203473Z 12:38:12 AM [express] GET /api/auth/me 200 in 104ms :: {"authenticated":true,"authorized":true,"user"…
+2025-10-29T00:38:12.8346254Z 12:38:12 AM [express] GET /api/settings 200 in 124ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:38:12.8380386Z 12:38:12 AM [express] GET /api/chat-sessions 200 in 120ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242…
+2025-10-29T00:38:12.8925466Z [Suppliers] Fetching all suppliers...
+2025-10-29T00:38:12.8943239Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:12.8945952Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:12.8946049Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:12.8946123Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:12.8946149Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:12.894618Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:12.8968169Z [Suppliers] Retrieved 4 suppliers
+2025-10-29T00:38:12.8984983Z 12:38:12 AM [express] GET /api/suppliers 200 in 5ms :: [{"id":"a4c03332-aab0-49a1-a639-40201a352fb4",…
+2025-10-29T00:38:12.9118168Z 12:38:12 AM [express] GET /api/chat-prompts 200 in 14ms :: [{"id":"1c2bfd79-0026-4c36-8b3a-2b6985cac3…
+2025-10-29T00:38:12.9141702Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:12.9142042Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:12.9143179Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:12.9143285Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:12.9147144Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:12.9147259Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:12.9234911Z 12:38:12 AM [express] GET /api/chat-sessions/6a23c27f-5b57-4718-8c6c-c2166242db94/messages 200 in 9ms…
+2025-10-29T00:38:16.8900479Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:16.890648Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:16.8924315Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:16.8924572Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:16.8924603Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:16.8924634Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:16.8998269Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:38:16.9014849Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:16.9016802Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:16.9017075Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:16.9017116Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:16.901714Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:16.9017256Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:16.9017675Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:16.9022151Z [Auth] Querying database for users...
+2025-10-29T00:38:16.9087118Z 12:38:16 AM [express] GET /api/chat-sessions 200 in 14ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:38:16.9171278Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:16.9171567Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:16.9171644Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:16.9171671Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:16.9171697Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:16.9171726Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:16.9171749Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:38:16.9171785Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:38:16.9171887Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:38:16.9171917Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:38:16.9177305Z 12:38:16 AM [express] GET /api/auth/me 200 in 17ms :: {"authenticated":true,"authorized":true,"user":…
+2025-10-29T00:38:16.9223362Z 12:38:16 AM [express] GET /api/settings 200 in 8ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:38:16.9657642Z [Suppliers] Fetching all suppliers...
+2025-10-29T00:38:16.9692594Z [Suppliers] Retrieved 4 suppliers
+2025-10-29T00:38:16.9720764Z 12:38:16 AM [express] GET /api/suppliers 200 in 5ms :: [{"id":"a4c03332-aab0-49a1-a639-40201a352fb4",…
+2025-10-29T00:38:19.071492Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:19.0715771Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:19.0715965Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:19.0720073Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:19.0720256Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:19.0720315Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:19.0732451Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:38:19.0735499Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:19.0735609Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:19.0735638Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:19.0735663Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:19.0735777Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:19.0736966Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:19.0737119Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:19.0737267Z [Auth] Querying database for users...
+2025-10-29T00:38:19.0750375Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:19.0750703Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:19.0753247Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:19.075335Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:19.0753459Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:19.075564Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:19.0787956Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:38:19.079034Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:38:19.0790449Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:38:19.0790475Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:38:19.0815987Z 12:38:19 AM [express] GET /api/auth/me 200 in 7ms :: {"authenticated":true,"authorized":true,"user":{…
+2025-10-29T00:38:19.0855532Z 12:38:19 AM [express] GET /api/settings 200 in 14ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:38:19.0908909Z 12:38:19 AM [express] GET /api/chat-sessions 200 in 16ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:38:19.2240265Z [Suppliers] Fetching all suppliers...
+2025-10-29T00:38:19.2274651Z [Suppliers] Retrieved 4 suppliers
+2025-10-29T00:38:19.2302666Z 12:38:19 AM [express] GET /api/suppliers 200 in 5ms :: [{"id":"a4c03332-aab0-49a1-a639-40201a352fb4",…
+2025-10-29T00:38:20.5585532Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:20.5592993Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:20.559579Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:20.5598196Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:20.5599907Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:20.5600006Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:20.5723514Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:38:20.5734822Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:20.5734979Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:20.5735009Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:20.5735083Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:20.5735106Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:20.5735133Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:20.5735156Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:20.5735176Z [Auth] Querying database for users...
+2025-10-29T00:38:20.5809059Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:38:20.581449Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:38:20.5814643Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:38:20.5814679Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:38:20.5843234Z 12:38:20 AM [express] GET /api/auth/me 200 in 15ms :: {"authenticated":true,"authorized":true,"user":…
+2025-10-29T00:38:20.585757Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:20.5888343Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:20.5888574Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:20.5888612Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:20.5888638Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:20.5888672Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:20.5925944Z 12:38:20 AM [express] GET /api/settings 200 in 34ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:38:20.6034082Z 12:38:20 AM [express] GET /api/chat-sessions 200 in 17ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:38:20.6429724Z [Data Sources] Fetching all data sources...
+2025-10-29T00:38:20.6459647Z [Data Sources] Retrieved 0 data sources
+2025-10-29T00:38:20.6479163Z 12:38:20 AM [express] GET /api/data-sources 200 in 5ms :: []
+2025-10-29T00:38:22.0178872Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:38:22.0183165Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:22.0195582Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:22.0195813Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:22.0195846Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:22.0195874Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:22.0195912Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:22.0195945Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:22.019597Z [Auth] Querying database for users...
+2025-10-29T00:38:22.0213317Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:22.0216003Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:22.0216124Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:22.0216153Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:22.0216182Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:22.0218077Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:22.0253079Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:22.0254888Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:22.0255992Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:22.0257147Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:22.0258193Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:22.0259292Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:22.0277463Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:38:22.0279445Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:38:22.0279556Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:38:22.028091Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:38:22.0295036Z 12:38:22 AM [express] GET /api/auth/me 200 in 11ms :: {"authenticated":true,"authorized":true,"user":…
+2025-10-29T00:38:22.0344747Z 12:38:22 AM [express] GET /api/chat-sessions 200 in 12ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:38:22.0364782Z 12:38:22 AM [express] GET /api/settings 200 in 10ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:38:22.080787Z [Database Meta] Fetching fresh metadata from information_schema
+2025-10-29T00:38:22.1161482Z [Database Meta] Retrieved metadata for 8 tables
+2025-10-29T00:38:22.1184465Z 12:38:22 AM [express] GET /api/database/meta 200 in 37ms :: {"tables":[{"name":"users","displayName":…
+2025-10-29T00:38:23.3382776Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:38:23.3388103Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:23.3390032Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:23.3391061Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:23.339273Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:23.3403847Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:23.3403995Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.3404026Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.3404049Z [Auth] Querying database for users...
+2025-10-29T00:38:23.3425536Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:23.3427777Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:23.3429621Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:23.343117Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:23.3458797Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:23.3459011Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.3470731Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:23.3472305Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:23.3473322Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:23.347413Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:23.3475034Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:23.3475852Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.3488256Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:38:23.3489854Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:38:23.34909Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:38:23.3491801Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:38:23.3505123Z 12:38:23 AM [express] GET /api/auth/me 200 in 12ms :: {"authenticated":true,"authorized":true,"user":…
+2025-10-29T00:38:23.3590208Z 12:38:23 AM [express] GET /api/settings 200 in 16ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:38:23.3590554Z 12:38:23 AM [express] GET /api/chat-sessions 200 in 12ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:38:23.4064151Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:23.4064703Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:23.4064962Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:23.4064993Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:23.4068974Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:23.4069125Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.4155959Z 12:38:23 AM [express] GET /api/chat-prompts 200 in 7ms :: [{"id":"1c2bfd79-0026-4c36-8b3a-2b6985cac37…
+2025-10-29T00:38:23.4168125Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:23.4184122Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:23.4184294Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:23.4184379Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:23.4184403Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:23.4184434Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.4197988Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:23.4201078Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:23.4201592Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:23.4201719Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:23.4201748Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:23.4201777Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.4213132Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:23.4215148Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:23.4215896Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:23.4215938Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:23.4215969Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:23.4215999Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.4235315Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:23.4236948Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:23.4237044Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:23.4238048Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:23.4238118Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:23.423956Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:23.4282673Z 12:38:23 AM [express] GET /api/prompts/ai/templates 200 in 8ms :: [{"id":"template-data-analysis","na…
+2025-10-29T00:38:23.4317634Z 12:38:23 AM [express] GET /api/prompt-categories 200 in 14ms :: [{"id":"e521895f-cf11-4bcb-b315-f5cd0…
+2025-10-29T00:38:23.4363633Z 12:38:23 AM [express] GET /api/users 200 in 12ms :: [{"id":"c6d5ed69-f948-4bcd-b918-ec55214adcb8","em…
+2025-10-29T00:38:23.484548Z 12:38:23 AM [express] GET /api/prompts/ai/analytics 200 in 60ms :: {"totalPrompts":2,"avgUsageCount":…
+2025-10-29T00:38:25.0919895Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:26.8572835Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:26.8573082Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:26.8573108Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:26.8573129Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:26.8573156Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:26.8573175Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:26.8573213Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:26.8573232Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:26.8573252Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:26.8573271Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:26.8573293Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:26.8573312Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:38:26.8573331Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:26.8573349Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:26.8573367Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:26.8573386Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:26.8573406Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:26.8573442Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:26.8573465Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:26.8573484Z [Auth] Querying database for users...
+2025-10-29T00:38:26.8573503Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:38:26.8573528Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:38:26.857355Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:38:26.857357Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:38:26.8573594Z 12:38:25 AM [express] GET /api/auth/me 200 in 20ms :: {"authenticated":true,"authorized":true,"user":…
+2025-10-29T00:38:26.8573615Z 12:38:25 AM [express] GET /api/settings 200 in 28ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:38:26.8573637Z 12:38:25 AM [express] GET /api/chat-sessions 200 in 35ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:38:26.8573672Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:26.857369Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:26.8573708Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:26.8573727Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:26.8573745Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:26.8573766Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:26.857381Z [Suppliers] Fetching all suppliers...
+2025-10-29T00:38:26.8573834Z 12:38:25 AM [express] GET /api/chat-prompts 200 in 8ms :: [{"id":"1c2bfd79-0026-4c36-8b3a-2b6985cac37…
+2025-10-29T00:38:26.8573851Z [Auth] === Starting authentication check ===
+2025-10-29T00:38:26.8573883Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:38:26.8573903Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:38:26.8573922Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:38:26.857394Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:38:26.8573961Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:38:26.8573979Z [Suppliers] Retrieved 4 suppliers
+2025-10-29T00:38:26.8574001Z 12:38:25 AM [express] GET /api/suppliers 200 in 8ms :: [{"id":"a4c03332-aab0-49a1-a639-40201a352fb4",…
+2025-10-29T00:38:26.8574022Z 12:38:25 AM [express] GET /api/chat-sessions/6a23c27f-5b57-4718-8c6c-c2166242db94/messages 200 in 12m…
+2025-10-29T00:43:52.254749Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:43:52.2548587Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:52.2548629Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:52.2548655Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:52.2548679Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:52.2550369Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:52.2550475Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:52.25505Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:52.2550521Z [Auth] Querying database for users...
+2025-10-29T00:43:52.2586493Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:52.2586698Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:52.2586726Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:52.2586748Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:52.258677Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:52.2586801Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:52.2639028Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:52.2639215Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:52.2639249Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:52.2639272Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:52.2639298Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:52.2639366Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:52.3728344Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:43:52.3735743Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:43:52.3735939Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:43:52.3750228Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:43:52.3814078Z 12:43:52 AM [express] GET /api/auth/me 200 in 122ms :: {"authenticated":true,"authorized":true,"user"…
+2025-10-29T00:43:52.3844682Z 12:43:52 AM [express] GET /api/chat-sessions 200 in 125ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242…
+2025-10-29T00:43:52.3863343Z 12:43:52 AM [express] GET /api/settings 200 in 124ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:43:52.4291517Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:52.4297263Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:52.4297519Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:52.4297548Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:52.4297578Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:52.429772Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:52.4306454Z [Suppliers] Fetching all suppliers...
+2025-10-29T00:43:52.4345543Z [Suppliers] Retrieved 4 suppliers
+2025-10-29T00:43:52.4358044Z 12:43:52 AM [express] GET /api/suppliers 200 in 5ms :: [{"id":"a4c03332-aab0-49a1-a639-40201a352fb4",…
+2025-10-29T00:43:52.4379168Z 12:43:52 AM [express] GET /api/chat-prompts 200 in 9ms :: [{"id":"1c2bfd79-0026-4c36-8b3a-2b6985cac37…
+2025-10-29T00:43:52.4405529Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:52.4406224Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:52.4406283Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:52.4406318Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:52.4406547Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:52.4406579Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:52.4490223Z 12:43:52 AM [express] GET /api/chat-sessions/6a23c27f-5b57-4718-8c6c-c2166242db94/messages 200 in 7ms…
+2025-10-29T00:43:55.7419919Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:55.742047Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:55.7423069Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:55.7423201Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:55.7423245Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:55.7423295Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:55.7484353Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:43:55.7504589Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:55.7509108Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:55.7509398Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:55.7509429Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:55.7509456Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:55.7509491Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:55.750952Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:55.7509545Z [Auth] Querying database for users...
+2025-10-29T00:43:55.7534552Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:55.7534798Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:55.7536367Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:55.7536459Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:55.7536625Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:55.7536655Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:55.7546702Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:43:55.7546948Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:43:55.7546985Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:43:55.755005Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:43:55.757017Z 12:43:55 AM [express] GET /api/auth/me 200 in 7ms :: {"authenticated":true,"authorized":true,"user":{…
+2025-10-29T00:43:55.7620193Z 12:43:55 AM [express] GET /api/chat-sessions 200 in 19ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:43:55.7701423Z 12:43:55 AM [express] GET /api/settings 200 in 14ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:43:55.8009218Z [Suppliers] Fetching all suppliers...
+2025-10-29T00:43:55.8041914Z [Suppliers] Retrieved 4 suppliers
+2025-10-29T00:43:55.8053766Z 12:43:55 AM [express] GET /api/suppliers 200 in 4ms :: [{"id":"a4c03332-aab0-49a1-a639-40201a352fb4",…
+2025-10-29T00:43:57.5021631Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:43:57.5027318Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:57.5027499Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:57.5027542Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:57.5027575Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:57.5027803Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:57.5027846Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:57.5027879Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:57.5027912Z [Auth] Querying database for users...
+2025-10-29T00:43:57.5049258Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:57.5071518Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:57.5071641Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:57.5071675Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:57.5071706Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:57.5071746Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:57.5071887Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:57.5071918Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:57.5071946Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:57.5085504Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:57.5088985Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:57.5089105Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:57.5096897Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:43:57.5097272Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:43:57.5099442Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:43:57.5099537Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:43:57.5116407Z 12:43:57 AM [express] GET /api/auth/me 200 in 9ms :: {"authenticated":true,"authorized":true,"user":{…
+2025-10-29T00:43:57.5212723Z 12:43:57 AM [express] GET /api/settings 200 in 14ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:43:57.5251585Z 12:43:57 AM [express] GET /api/chat-sessions 200 in 19ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:43:57.555659Z [Data Sources] Fetching all data sources...
+2025-10-29T00:43:57.5581231Z [Data Sources] Retrieved 0 data sources
+2025-10-29T00:43:57.5604518Z 12:43:57 AM [express] GET /api/data-sources 200 in 4ms :: []
+2025-10-29T00:43:59.1566833Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:59.1567157Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:59.1567185Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:59.1577578Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:59.1577768Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:59.1577811Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:59.1583255Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:43:59.158386Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:59.158391Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:59.1583942Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:59.1584129Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:59.1603392Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:59.1603569Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:59.1603601Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:59.1603628Z [Auth] Querying database for users...
+2025-10-29T00:43:59.1627862Z [Auth] === Starting authentication check ===
+2025-10-29T00:43:59.1632002Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:43:59.1632184Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:43:59.1632216Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:43:59.1634607Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:43:59.1634685Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:43:59.1647347Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:43:59.1647579Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:43:59.1649393Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:43:59.1649486Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:43:59.1661414Z 12:43:59 AM [express] GET /api/auth/me 200 in 7ms :: {"authenticated":true,"authorized":true,"user":{…
+2025-10-29T00:43:59.1728872Z 12:43:59 AM [express] GET /api/settings 200 in 17ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:43:59.1781438Z 12:43:59 AM [express] GET /api/chat-sessions 200 in 15ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:43:59.2225463Z [Database Meta] Fetching fresh metadata from information_schema
+2025-10-29T00:43:59.263526Z [Database Meta] Retrieved metadata for 8 tables
+2025-10-29T00:43:59.2653654Z 12:43:59 AM [express] GET /api/database/meta 200 in 42ms :: {"tables":[{"name":"users","displayName":…
+2025-10-29T00:44:02.1311214Z [Auth] === Starting authentication check ===
+2025-10-29T00:44:02.131766Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:44:02.1342855Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:44:02.1367623Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:44:02.136789Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:44:02.1367927Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:44:02.1386981Z [Auth] === Starting authentication check ===
+2025-10-29T00:44:02.1394118Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:44:02.1402181Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:44:02.1411898Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:44:02.1412006Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:44:02.1412045Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:44:02.1443541Z [Auth] /api/auth/me - Getting current user
+2025-10-29T00:44:02.1443737Z [Auth] === Starting authentication check ===
+2025-10-29T00:44:02.1443762Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:44:02.1443787Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:44:02.1452104Z [Auth] Checking DEV_AUTH_EMAIL environment variable...
+2025-10-29T00:44:02.1452274Z [Auth] Checking X-MS-CLIENT-PRINCIPAL-NAME header: PRESENT
+2025-10-29T00:44:02.1452354Z [Auth] ✓ Using X-MS-CLIENT-PRINCIPAL-NAME: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:44:02.1452382Z [Auth] ✓ Email retrieved: Matthew.Chapman@functionalproteins.com
+2025-10-29T00:44:02.1452406Z [Auth] Querying database for users...
+2025-10-29T00:44:02.1578726Z [Auth] Database query complete. Total users in database: 4
+2025-10-29T00:44:02.1584667Z [Auth] Existing users: Jerry.Frankl@apcproteins.com, dawn.kucera@apcproteins.com, matthew.chapman@functionalproteins.com, Julie.Bramhall@functionalproteins.com
+2025-10-29T00:44:02.1590583Z [Auth] ✓ User found in database: matthew.chapman@functionalproteins.com - Role: admin
+2025-10-29T00:44:02.1610007Z [Auth] ✓ Returning authenticated user
+2025-10-29T00:44:02.161468Z 12:44:02 AM [express] GET /api/auth/me 200 in 15ms :: {"authenticated":true,"authorized":true,"user":…
+2025-10-29T00:44:02.1643436Z 12:44:02 AM [express] GET /api/settings 200 in 25ms :: {"default_chat_retention_days":"7"}
+2025-10-29T00:44:02.1670096Z 12:44:02 AM [express] GET /api/chat-sessions 200 in 38ms :: [{"id":"6a23c27f-5b57-4718-8c6c-c2166242d…
+2025-10-29T00:44:02.2041788Z [Data Sources] Fetching all data sources...
+2025-10-29T00:44:02.2055873Z [Data Sources] Retrieved 0 data sources
+2025-10-29T00:44:02.2083324Z 12:44:02 AM [express] GET /api/data-sources 200 in 4ms :: []
+2025-10-29T00:45:03.0294559Z [Auth] === Starting authentication check ===
+2025-10-29T00:45:03.0295141Z [Auth] Environment: NODE_ENV = production
+2025-10-29T00:45:03.0295172Z [Auth] Environment: DEV_AUTH_EMAIL = NOT SET
+2025-10-29T00:45:03.0295195Z [Auth] Checking DEV_AUTH_EMAIL environment variable...

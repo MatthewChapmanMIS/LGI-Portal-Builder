@@ -190,6 +190,35 @@ The workflow "Start application" runs `npm run dev` which starts:
 - Vite server for the frontend
 - Both served on the same port with HMR enabled
 
+## Deployment Configuration
+
+### Cache Control Headers
+To prevent hard refresh issues after publishing, add these cache control headers to `.replit` file:
+
+```toml
+[[deployment.responseHeaders]]
+path = "/*.html"
+name = "Cache-Control"
+value = "no-cache, no-store, must-revalidate"
+
+[[deployment.responseHeaders]]
+path = "/index.html"
+name = "Cache-Control"
+value = "no-cache, no-store, must-revalidate"
+
+[[deployment.responseHeaders]]
+path = "/assets/*"
+name = "Cache-Control"
+value = "public, max-age=31536000, immutable"
+```
+
+**How it works:**
+- HTML files are never cached - browsers always fetch fresh HTML on reload
+- Asset files (JS/CSS) are cached for 1 year - Vite fingerprints them with content hashes, so new builds = new filenames
+- Users automatically get updates after you publish - no hard refresh needed!
+
+**Important:** After adding these headers to `.replit`, you must republish your app for the changes to take effect.
+
 ## User Preferences
 - Dark mode as default theme
 - Professional, corporate aesthetic with futuristic edge
